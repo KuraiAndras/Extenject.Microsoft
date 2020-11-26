@@ -173,14 +173,12 @@ namespace Extenject.Microsoft.Tests
             }
         }
 
-        public sealed class DelegateService : InjectionTests
+        public sealed class DelegateSingleton : InjectionTests
         {
-            private delegate void DelegateS();
-
             [SetUp]
             public override void Arrange()
             {
-                Services.AddSingleton<DelegateS>(_ => () => { });
+                Services.AddSingleton<DelegateService>(_ => () => { });
 
                 base.Arrange();
             }
@@ -188,7 +186,7 @@ namespace Extenject.Microsoft.Tests
             [Test]
             public override void ActAssert()
             {
-                var (service1, service2) = ServiceProvider.GetRequiredService2<DelegateS>();
+                var (service1, service2) = ServiceProvider.GetRequiredService2<DelegateService>();
 
                 Helper.NotNull(service1, service2);
                 Assert.AreSame(service1, service2);
