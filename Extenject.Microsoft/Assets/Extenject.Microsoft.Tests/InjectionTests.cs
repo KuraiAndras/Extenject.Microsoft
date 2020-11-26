@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
 using Zenject;
@@ -149,5 +149,26 @@ namespace Extenject.Microsoft.Tests
             }
         }
 
+        public sealed class DelegateService : InjectionTests
+        {
+            private delegate void DelegateS();
+
+            [SetUp]
+            public override void Arrange()
+            {
+                Services.AddSingleton<DelegateS>(_ => () => { });
+
+                base.Arrange();
+            }
+
+            [Test]
+            public override void ActAssert()
+            {
+                var (service1, service2) = ServiceProvider.GetRequiredService2<DelegateS>();
+
+                Helper.NotNull(service1, service2);
+                Assert.AreSame(service1, service2);
+            }
+        }
     }
 }

@@ -10,7 +10,10 @@ namespace Extenject.Microsoft
     {
         public static DiContainer Translate(this IServiceCollection services, DiContainer container)
         {
-            container.Bind<IServiceProvider>().To<ExtenjectServiceProvider>().AsSingle();
+            container
+                .Bind<IServiceProvider>()
+                .To<ExtenjectServiceProvider>()
+                .AsSingle();
 
             var scopedTypes = new List<ServiceDescriptor>();
 
@@ -21,7 +24,14 @@ namespace Extenject.Microsoft
 
             foreach (var service in services)
             {
-                if (!(service.ImplementationFactory is null)) throw new NotSupportedException("Factories are not supported");
+                if (!(service.ImplementationFactory is null))
+                {
+                    container.Bind(service.ServiceType)
+                        .FromMethodUntyped(ctx => service.ImplementationFactory(ctx.Container.Resolve<IServiceProvider>()));
+
+                    return container;
+                }
+
 
                 switch (service.Lifetime)
                 {
