@@ -138,14 +138,38 @@ namespace Extenject.Microsoft.Tests
 
                 Assert.AreSame(sameScope1, sameScope2);
 
-                var otherScope = ServiceProvider
-                    .GetRequiredService<IServiceScopeFactory>()
-                    .CreateScope()
-                    .ServiceProvider
-                    .GetRequiredService<IService>();
+                var scope = ServiceProvider.CreateScope();
+
+                var otherScope = scope.ServiceProvider.GetRequiredService<IService>();
 
                 Assert.AreNotSame(sameScope1, otherScope);
                 Assert.AreNotSame(sameScope2, otherScope);
+            }
+        }
+
+        public sealed class ScopedSingleton : InjectionTests
+        {
+            private sealed class SingletonService
+            {
+            }
+
+            [SetUp]
+            public override void Arrange()
+            {
+                Services.AddSingleton<SingletonService>();
+
+                base.Arrange();
+            }
+
+            [Test]
+            public override void ActAssert()
+            {
+                var scope = ServiceProvider.CreateScope();
+
+                var singletonService1 = ServiceProvider.GetRequiredService<SingletonService>();
+                var singletonService2 = scope.ServiceProvider.GetRequiredService<SingletonService>();
+
+                Assert.AreSame(singletonService1, singletonService2);
             }
         }
 
