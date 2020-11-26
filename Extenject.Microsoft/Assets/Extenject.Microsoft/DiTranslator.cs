@@ -1,34 +1,53 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Zenject;
 
 namespace Extenject.Microsoft
 {
     public static class DiTranslator
     {
-        public static void Translate(this IServiceCollection services, DiContainer container)
+        public static DiContainer Translate(this IServiceCollection services, DiContainer container)
         {
             container.Bind<IServiceProvider>().To<ExtenjectServiceProvider>().AsSingle();
+
+            var scopedTypes = new List<ServiceDescriptor>();
+
+            container
+                .Bind<IServiceScopeFactory>()
+                .FromMethod(ctx => new ExtenjectServiceScopeFactory(ctx.Container, new ReadOnlyCollection<ServiceDescriptor>(scopedTypes)))
+                .Lazy();
 
             foreach (var service in services)
             {
                 if (!(service.ImplementationFactory is null)) throw new NotSupportedException("Factories are not supported");
 
-                var binding = container.Bind(service.ServiceType).To(service.ImplementationType);
-
                 switch (service.Lifetime)
                 {
                     case ServiceLifetime.Singleton:
-                        binding.AsSingle();
+                        container
+                            .Bind(service.ServiceType)
+                            .To(service.ImplementationType)
+                            .AsSingle();
                         break;
                     case ServiceLifetime.Scoped:
-                        binding.AsCached();
+                        scopedTypes.Add(service);
+                        container
+                            .Bind(service.ServiceType)
+                            .To(service.ImplementationType)
+                            .AsSingle();
                         break;
                     case ServiceLifetime.Transient:
-                        binding.AsTransient();
+                        container
+                            .Bind(service.ServiceType)
+                            .To(service.ImplementationType)
+                            .AsTransient();
                         break;
                 }
             }
+
+            return container;
         }
     }
 }

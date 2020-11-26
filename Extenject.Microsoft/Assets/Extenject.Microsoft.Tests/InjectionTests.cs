@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System;
 using Zenject;
@@ -7,10 +7,17 @@ namespace Extenject.Microsoft.Tests
 {
     public abstract class InjectionTests : TestBase
     {
-        private DiContainer Container { get; } = new DiContainer();
         private IServiceCollection Services { get; } = new ExtenjectServiceCollection();
+        private IServiceProvider ServiceProvider { get; set; }
 
-        public override void Arrange() => Services.Translate(Container);
+        public override void Arrange()
+        {
+            var container = new DiContainer();
+
+            Services.Translate(container);
+
+            ServiceProvider = container.Resolve<IServiceProvider>();
+        }
 
         public sealed class CanCreateServiceProvider : InjectionTests
         {
@@ -21,11 +28,26 @@ namespace Extenject.Microsoft.Tests
             }
 
             [Test]
+            public override void ActAssert() => Assert.IsInstanceOf<ExtenjectServiceProvider>(ServiceProvider);
+        }
+
+        public sealed class Transient : InjectionTests
+        {
+            [SetUp]
+            public override void Arrange()
+            {
+                Services.AddTransient<Service>();
+
+                base.Arrange();
+            }
+
+            [Test]
             public override void ActAssert()
             {
-                var serviceProvider = Container.Resolve<IServiceProvider>();
+                var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
 
-                Assert.IsInstanceOf<ExtenjectServiceProvider>(serviceProvider);
+                Helper.NotNull(service1, service2);
+                Assert.AreNotSame(service1, service2);
             }
         }
 
@@ -42,9 +64,7 @@ namespace Extenject.Microsoft.Tests
             [Test]
             public override void ActAssert()
             {
-                var serviceProvider = Container.Resolve<IServiceProvider>();
-
-                var (service1, service2) = serviceProvider.GetRequiredService2<IService>();
+                var (service1, service2) = ServiceProvider.GetRequiredService2<IService>();
 
                 Helper.NotNull(service1, service2);
                 Assert.AreNotSame(service1, service2);
@@ -64,21 +84,19 @@ namespace Extenject.Microsoft.Tests
             [Test]
             public override void ActAssert()
             {
-                var serviceProvider = Container.Resolve<IServiceProvider>();
-
-                var (service1, service2) = serviceProvider.GetRequiredService2<Service>();
+                var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
 
                 Helper.NotNull(service1, service2);
                 Assert.AreSame(service1, service2);
             }
         }
 
-        public sealed class Transient : InjectionTests
+        public sealed class Scoped : InjectionTests
         {
             [SetUp]
             public override void Arrange()
             {
-                Services.AddTransient<Service>();
+                Services.AddScoped<Service>();
 
                 base.Arrange();
             }
@@ -86,13 +104,50 @@ namespace Extenject.Microsoft.Tests
             [Test]
             public override void ActAssert()
             {
-                var serviceProvider = Container.Resolve<IServiceProvider>();
+                var sameScope1 = ServiceProvider.GetRequiredService<Service>();
+                var sameScope2 = ServiceProvider.GetRequiredService<Service>();
 
-                var (service1, service2) = serviceProvider.GetRequiredService2<Service>();
+                Assert.AreSame(sameScope1, sameScope2);
 
-                Helper.NotNull(service1, service2);
-                Assert.AreNotSame(service1, service2);
+                var otherScope = ServiceProvider
+                    .GetRequiredService<IServiceScopeFactory>()
+                    .CreateScope()
+                    .ServiceProvider
+                    .GetRequiredService<Service>();
+
+                Assert.AreNotSame(sameScope1, otherScope);
+                Assert.AreNotSame(sameScope2, otherScope);
             }
         }
+
+        public sealed class ScopedInterface : InjectionTests
+        {
+            [SetUp]
+            public override void Arrange()
+            {
+                Services.AddScoped<IService, Service>();
+
+                base.Arrange();
+            }
+
+            [Test]
+            public override void ActAssert()
+            {
+                var sameScope1 = ServiceProvider.GetRequiredService<IService>();
+                var sameScope2 = ServiceProvider.GetRequiredService<IService>();
+
+                Assert.AreSame(sameScope1, sameScope2);
+
+                var otherScope = ServiceProvider
+                    .GetRequiredService<IServiceScopeFactory>()
+                    .CreateScope()
+                    .ServiceProvider
+                    .GetRequiredService<IService>();
+
+                Assert.AreNotSame(sameScope1, otherScope);
+                Assert.AreNotSame(sameScope2, otherScope);
+            }
+        }
+
     }
 }
