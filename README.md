@@ -30,7 +30,7 @@ public sealed class SampleInstaller : MonoInstaller
     public override void InstallBindings()
     {
         _serviceCollection.AddTransient<IMyService, MyService>();
-        _serviceCollection.AddScroped<IService, Service>();
+        _serviceCollection.AddScoped<IService, Service>();
         _serviceCollection.AddSingleton<ISingleton, Singleton>();
 
         _serviceCollection.Translate(Container); // This will translate the bindings into the provided DiContainer
