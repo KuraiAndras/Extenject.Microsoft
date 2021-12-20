@@ -36,25 +36,40 @@ namespace Extenject.Microsoft
                 switch (service.Lifetime)
                 {
                     case ServiceLifetime.Singleton:
-                        container
-                            .Bind(service.ServiceType)
-                            .To(service.ImplementationType)
-                            .AsSingle();
+                        BindSingleton(container, service);
                         break;
                     case ServiceLifetime.Scoped:
                         scopedTypes.Add(service);
-                        container
-                            .Bind(service.ServiceType)
-                            .To(service.ImplementationType)
-                            .AsSingle();
+                        BindSingleton(container, service);
                         break;
                     case ServiceLifetime.Transient:
                         container
                             .Bind(service.ServiceType)
-                            .To(service.ImplementationType)
+                            .To(service.ImplementationType ?? service.ServiceType)
                             .AsTransient();
                         break;
                 }
+            }
+
+            return container;
+        }
+
+        private static DiContainer BindSingleton(DiContainer container, ServiceDescriptor service)
+        {
+            if (service.ImplementationInstance == null)
+            {
+                container
+                    .Bind(service.ServiceType)
+                    .To(service.ImplementationType ?? service.ServiceType)
+                    .AsSingle();
+            }
+            else
+            {
+                //Bind it to the existing instance
+                container
+                    .Bind(service.ServiceType)
+                    .To(service.ImplementationType ?? service.ServiceType)
+                    .FromInstance(service.ImplementationInstance);
             }
 
             return container;

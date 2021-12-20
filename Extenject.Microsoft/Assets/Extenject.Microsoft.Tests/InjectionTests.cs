@@ -91,6 +91,30 @@ namespace Extenject.Microsoft.Tests
             }
         }
 
+        public sealed class ImplementationInstanceSingleton : InjectionTests
+        {
+            private Service _service;
+
+            [SetUp]
+            public override void Arrange()
+            {
+                _service = new Service();
+                Services.AddSingleton(_service);
+
+                base.Arrange();
+            }
+
+            [Test]
+            public override void ActAssert()
+            {
+                var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
+
+                Helper.NotNull(service1, service2);
+                Assert.AreSame(_service, service1);
+                Assert.AreSame(_service, service2);
+            }
+        }
+
         public sealed class Scoped : InjectionTests
         {
             [SetUp]
