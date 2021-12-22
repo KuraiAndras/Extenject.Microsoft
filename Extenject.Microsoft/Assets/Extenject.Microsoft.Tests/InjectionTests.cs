@@ -71,12 +71,76 @@ namespace Extenject.Microsoft.Tests
             }
         }
 
+        public sealed class TransientDelegate : InjectionTests
+        {
+            [SetUp]
+            public override void Arrange()
+            {
+                Services.AddTransient<IService>(_ => new Service());
+
+                base.Arrange();
+            }
+
+            [Test]
+            public override void ActAssert()
+            {
+                var (service1, service2) = ServiceProvider.GetRequiredService2<IService>();
+
+                Helper.NotNull(service1, service2);
+                Assert.AreNotSame(service1, service2);
+            }
+        }
+
         public sealed class Singleton : InjectionTests
         {
             [SetUp]
             public override void Arrange()
             {
                 Services.AddSingleton<Service>();
+
+                base.Arrange();
+            }
+
+            [Test]
+            public override void ActAssert()
+            {
+                var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
+
+                Helper.NotNull(service1, service2);
+                Assert.AreSame(service1, service2);
+            }
+        }
+
+        public sealed class ImplementationInstanceSingleton : InjectionTests
+        {
+            private Service _service;
+
+            [SetUp]
+            public override void Arrange()
+            {
+                _service = new Service();
+                Services.AddSingleton(_service);
+
+                base.Arrange();
+            }
+
+            [Test]
+            public override void ActAssert()
+            {
+                var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
+
+                Helper.NotNull(service1, service2);
+                Assert.AreSame(_service, service1);
+                Assert.AreSame(_service, service2);
+            }
+        }
+
+        public sealed class SingletonDelegate : InjectionTests
+        {
+            [SetUp]
+            public override void Arrange()
+            {
+                Services.AddSingleton<Service>(_ => new Service());
 
                 base.Arrange();
             }
@@ -157,6 +221,32 @@ namespace Extenject.Microsoft.Tests
             public override void Arrange()
             {
                 Services.AddSingleton<SingletonService>();
+
+                base.Arrange();
+            }
+
+            [Test]
+            public override void ActAssert()
+            {
+                var scope = ServiceProvider.CreateScope();
+
+                var singletonService1 = ServiceProvider.GetRequiredService<SingletonService>();
+                var singletonService2 = scope.ServiceProvider.GetRequiredService<SingletonService>();
+
+                Assert.AreSame(singletonService1, singletonService2);
+            }
+        }
+
+        public sealed class ScopedDelegateSingleton : InjectionTests
+        {
+            private sealed class SingletonService
+            {
+            }
+
+            [SetUp]
+            public override void Arrange()
+            {
+                Services.AddSingleton<SingletonService>(_ => new SingletonService());
 
                 base.Arrange();
             }
