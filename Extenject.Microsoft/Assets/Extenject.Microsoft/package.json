@@ -1,7 +1,7 @@
 {
     "name": "com.extenject.microsoft",
     "displayName": "Extenject.Microsoft",
-    "description": "Microsoft.Extensions.DependencyInjection.Abstractions",
+    "description": "Translate Microsoft.Extensions.DependencyInjection registrations to Extenject/Zenject",
     "version": "0.2.0",
     "author": {
         "name": "Kurai András",
@@ -10,5 +10,9 @@
     },
     "dependencies": {
         "com.svermeulen.extenject": "9.2.0-stcf3"
-    }
+    },
+    "license": "MIT",
+    "licensesUrl": "https://github.com/KuraiAndras/Extenject.Microsoft/blob/main/LICENSE.md",
+    "changelogUrl": "https://github.com/KuraiAndras/Extenject.Microsoft/blob/main/CHANGELOG.md",
+    "documentationUrl": "https://github.com/KuraiAndras/Extenject.Microsoft/blob/main/README.md"
 }
