@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Extenject-upm\**\*.cs" />
+    <Reference Include="Zenject-usage">
+      <HintPath>..\Extenject-upm\Source\Usage\Zenject-usage.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Unity3D.SDK" Version="2020.3.13.1" />
+  </ItemGroup>
+
+</Project>
