@@ -1,14 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Extenject.Microsoft\Assets\Extenject.Microsoft.Tests\**\*.cs" />
+    <Compile Include="..\..\Extenject.Microsoft\Assets\Extenject.Microsoft.Tests\**\*.cs" />
   </ItemGroup>
   
   <ItemGroup>
@@ -20,7 +18,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Extenject.Microsoft.Wrapper\Extenject.Microsoft.csproj" />
+    <ProjectReference Include="..\..\Sources\Extenject.Microsoft\Extenject.Microsoft.csproj" />
   </ItemGroup>
   
 </Project>

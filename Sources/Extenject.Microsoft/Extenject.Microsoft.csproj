@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Extenject.Microsoft\Assets\Extenject.Microsoft\**\*.cs" />
+    <Compile Include="..\..\Extenject.Microsoft\Assets\Extenject.Microsoft\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
