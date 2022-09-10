@@ -20,7 +20,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Extenject.Microsoft.Wrapper\Extenject.Microsoft.Wrapper.csproj" />
+    <ProjectReference Include="..\Extenject.Microsoft.Wrapper\Extenject.Microsoft.csproj" />
   </ItemGroup>
   
 </Project>

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extenject.Microsoft.NUnitTests", "Extenject.Microsoft.NUnitTests\Extenject.Microsoft.NUnitTests.csproj", "{BA8D05A0-19A7-4EC3-A995-DED090C5F8A5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extenject.Microsoft.Wrapper", "Extenject.Microsoft.Wrapper\Extenject.Microsoft.Wrapper.csproj", "{9D344910-38F5-4450-AE26-0EBAFC59F975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extenject.Microsoft", "Extenject.Microsoft.Wrapper\Extenject.Microsoft.csproj", "{9D344910-38F5-4450-AE26-0EBAFC59F975}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extenject", "Extenject\Extenject.csproj", "{C79D8A40-4CF3-48B0-948B-C05690E0CEAA}"
 EndProject
