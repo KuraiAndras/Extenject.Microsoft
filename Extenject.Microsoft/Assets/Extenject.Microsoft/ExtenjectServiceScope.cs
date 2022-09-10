@@ -11,7 +11,21 @@ namespace Extenject.Microsoft
 
         public ExtenjectServiceScope(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
-        public void Dispose() => _disposables.ForEach(d => d.Dispose());
+        public void Dispose()
+        {
+            for(var i = 0; i < _disposables.Count; i++)
+            {
+                try
+                {
+                    _disposables[i].Dispose();
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Do nothing
+                }
+            }
+            _disposables.Clear();
+        }
 
         public IServiceProvider ServiceProvider => this;
 
