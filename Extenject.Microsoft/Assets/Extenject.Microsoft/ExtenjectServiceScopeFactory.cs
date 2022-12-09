@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Zenject;
 
@@ -21,13 +22,13 @@ namespace Extenject.Microsoft
 
             foreach (var service in _scopedTypes)
             {
-                if (service.ImplementationFactory is not null)
+                if (service.ImplementationFactory is null)
                 {
-                    RebindToImplementationFactory(container, service);
+                    RebindToType(container, service);
                 }
                 else
                 {
-                    RebindToType(container, service);
+                    RebindToImplementationFactory(container, service);
                 }
             }
 
