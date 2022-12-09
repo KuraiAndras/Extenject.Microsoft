@@ -28,7 +28,7 @@ namespace Extenject.Microsoft.Tests
             }
 
             [Test]
-            public override void ActAssert() => Assert.IsInstanceOf<ExtenjectServiceProvider>(ServiceProvider);
+            public override void ActAssert() => Assert.That(ServiceProvider, Is.InstanceOf<ExtenjectServiceProvider>());
         }
 
         public sealed class Transient : InjectionTests
@@ -47,7 +47,7 @@ namespace Extenject.Microsoft.Tests
                 var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
 
                 Helper.NotNull(service1, service2);
-                Assert.AreNotSame(service1, service2);
+                Assert.That(service2, Is.Not.SameAs(service1));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Extenject.Microsoft.Tests
                 var (service1, service2) = ServiceProvider.GetRequiredService2<IService>();
 
                 Helper.NotNull(service1, service2);
-                Assert.AreNotSame(service1, service2);
+                Assert.That(service2, Is.Not.SameAs(service1));
             }
         }
 
@@ -87,7 +87,7 @@ namespace Extenject.Microsoft.Tests
                 var (service1, service2) = ServiceProvider.GetRequiredService2<IService>();
 
                 Helper.NotNull(service1, service2);
-                Assert.AreNotSame(service1, service2);
+                Assert.That(service2, Is.Not.SameAs(service1));
             }
         }
 
@@ -107,7 +107,7 @@ namespace Extenject.Microsoft.Tests
                 var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
 
                 Helper.NotNull(service1, service2);
-                Assert.AreSame(service1, service2);
+                Assert.That(service2, Is.SameAs(service1));
             }
         }
 
@@ -130,8 +130,8 @@ namespace Extenject.Microsoft.Tests
                 var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
 
                 Helper.NotNull(service1, service2);
-                Assert.AreSame(_service, service1);
-                Assert.AreSame(_service, service2);
+                Assert.That(service1, Is.SameAs(_service));
+                Assert.That(service2, Is.SameAs(_service));
             }
         }
 
@@ -151,7 +151,7 @@ namespace Extenject.Microsoft.Tests
                 var (service1, service2) = ServiceProvider.GetRequiredService2<Service>();
 
                 Helper.NotNull(service1, service2);
-                Assert.AreSame(service1, service2);
+                Assert.That(service2, Is.SameAs(service1));
             }
         }
 
@@ -171,7 +171,7 @@ namespace Extenject.Microsoft.Tests
                 var sameScope1 = ServiceProvider.GetRequiredService<Service>();
                 var sameScope2 = ServiceProvider.GetRequiredService<Service>();
 
-                Assert.AreSame(sameScope1, sameScope2);
+                Assert.That(sameScope2, Is.SameAs(sameScope1));
 
                 var otherScope = ServiceProvider
                     .GetRequiredService<IServiceScopeFactory>()
@@ -179,8 +179,8 @@ namespace Extenject.Microsoft.Tests
                     .ServiceProvider
                     .GetRequiredService<Service>();
 
-                Assert.AreNotSame(sameScope1, otherScope);
-                Assert.AreNotSame(sameScope2, otherScope);
+                Assert.That(otherScope, Is.Not.SameAs(sameScope1));
+                Assert.That(otherScope, Is.Not.SameAs(sameScope2));
             }
         }
 
@@ -200,14 +200,14 @@ namespace Extenject.Microsoft.Tests
                 var sameScope1 = ServiceProvider.GetRequiredService<IService>();
                 var sameScope2 = ServiceProvider.GetRequiredService<IService>();
 
-                Assert.AreSame(sameScope1, sameScope2);
+                Assert.That(sameScope2, Is.SameAs(sameScope1));
 
                 var scope = ServiceProvider.CreateScope();
 
                 var otherScope = scope.ServiceProvider.GetRequiredService<IService>();
 
-                Assert.AreNotSame(sameScope1, otherScope);
-                Assert.AreNotSame(sameScope2, otherScope);
+                Assert.That(otherScope, Is.Not.SameAs(sameScope1));
+                Assert.That(otherScope, Is.Not.SameAs(sameScope2));
             }
         }
 
@@ -233,7 +233,7 @@ namespace Extenject.Microsoft.Tests
                 var singletonService1 = ServiceProvider.GetRequiredService<SingletonService>();
                 var singletonService2 = scope.ServiceProvider.GetRequiredService<SingletonService>();
 
-                Assert.AreSame(singletonService1, singletonService2);
+                Assert.That(singletonService2, Is.SameAs(singletonService1));
             }
         }
 
@@ -259,7 +259,7 @@ namespace Extenject.Microsoft.Tests
                 var singletonService1 = ServiceProvider.GetRequiredService<SingletonService>();
                 var singletonService2 = scope.ServiceProvider.GetRequiredService<SingletonService>();
 
-                Assert.AreSame(singletonService1, singletonService2);
+                Assert.That(singletonService2, Is.SameAs(singletonService1));
             }
         }
 
@@ -279,7 +279,7 @@ namespace Extenject.Microsoft.Tests
                 var (service1, service2) = ServiceProvider.GetRequiredService2<DelegateService>();
 
                 Helper.NotNull(service1, service2);
-                Assert.AreSame(service1, service2);
+                Assert.That(service2, Is.SameAs(service1));
             }
         }
     }

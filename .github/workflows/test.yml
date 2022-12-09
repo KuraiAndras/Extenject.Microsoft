@@ -1,0 +1,27 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+
+jobs:
+  publish:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2.1.0
+
+      - name: Restore
+        run: dotnet restore
+        shell: pwsh
+
+      - name: Build
+        run: dotnet build
+        shell: pwsh
+
+      - name: Test
+        run: dotnet test
+        shell: pwsh

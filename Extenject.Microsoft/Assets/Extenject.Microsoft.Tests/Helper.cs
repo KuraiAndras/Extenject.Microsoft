@@ -10,7 +10,7 @@ namespace Extenject.Microsoft.Tests
         {
             foreach (var o in objects)
             {
-                Assert.NotNull(o);
+                Assert.That(o, Is.Not.Null);
             }
         }
 

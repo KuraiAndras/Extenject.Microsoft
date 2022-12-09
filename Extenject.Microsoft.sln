@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extenject.Microsoft.Tests", "Tests\Extenject.Microsoft.Tests\Extenject.Microsoft.Tests.csproj", "{BA8D05A0-19A7-4EC3-A995-DED090C5F8A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extenject.Microsoft", "Sources\Extenject.Microsoft\Extenject.Microsoft.csproj", "{9D344910-38F5-4450-AE26-0EBAFC59F975}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extenject", "Sources\Extenject\Extenject.csproj", "{C79D8A40-4CF3-48B0-948B-C05690E0CEAA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extenject.Microsoft.IntegrationTests", "Tests\Extenject.Microsoft.IntegrationTests\Extenject.Microsoft.IntegrationTests.csproj", "{F0341AD9-A39C-47ED-B62C-F55290C0D079}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{213398CA-B2FB-4E52-B5FC-D007C6A05530}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		CHANGELOG.md = CHANGELOG.md
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA8D05A0-19A7-4EC3-A995-DED090C5F8A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8D05A0-19A7-4EC3-A995-DED090C5F8A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8D05A0-19A7-4EC3-A995-DED090C5F8A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8D05A0-19A7-4EC3-A995-DED090C5F8A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D344910-38F5-4450-AE26-0EBAFC59F975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D344910-38F5-4450-AE26-0EBAFC59F975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D344910-38F5-4450-AE26-0EBAFC59F975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D344910-38F5-4450-AE26-0EBAFC59F975}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C79D8A40-4CF3-48B0-948B-C05690E0CEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C79D8A40-4CF3-48B0-948B-C05690E0CEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C79D8A40-4CF3-48B0-948B-C05690E0CEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C79D8A40-4CF3-48B0-948B-C05690E0CEAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0341AD9-A39C-47ED-B62C-F55290C0D079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0341AD9-A39C-47ED-B62C-F55290C0D079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0341AD9-A39C-47ED-B62C-F55290C0D079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0341AD9-A39C-47ED-B62C-F55290C0D079}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4DB7669-8B66-4FE3-A29E-D6F8B7AECD68}
+	EndGlobalSection
+EndGlobal
