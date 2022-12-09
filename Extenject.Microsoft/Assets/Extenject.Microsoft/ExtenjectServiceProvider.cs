@@ -13,6 +13,16 @@ namespace Extenject.Microsoft
         {
         }
 
-        public object GetService(Type serviceType) => _container.Resolve(serviceType);
+        public object GetService(Type serviceType)
+        {
+            try
+            {
+                return _container.Resolve(serviceType);
+            }
+            catch (ZenjectException _)
+            {
+                return null;
+            }
+        }
     }
 }
