@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
+using Microsoft.Extensions.DependencyInjection;
+
 using Zenject;
 
 namespace Extenject.Microsoft
@@ -46,7 +48,6 @@ namespace Extenject.Microsoft
         {
             switch (service.Lifetime)
             {
-                
                 case ServiceLifetime.Transient:
                     container.Bind(service.ServiceType)
                         .FromMethodUntyped(ctx => service.ImplementationFactory(ctx.Container.Resolve<IServiceProvider>())).AsTransient();
