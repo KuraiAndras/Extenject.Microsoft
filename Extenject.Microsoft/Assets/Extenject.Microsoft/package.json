@@ -2,7 +2,7 @@
     "name": "com.extenject.microsoft",
     "displayName": "Extenject.Microsoft",
     "description": "Translate Microsoft.Extensions.DependencyInjection registrations to Extenject/Zenject",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "author": {
         "name": "Kurai András",
         "email": "k.andras9642@gmail.com",
